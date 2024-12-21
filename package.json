@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-menubar": "^1.1.4",
+    "@radix-ui/react-navigation-menu": "^1.2.3",
     "@trpc/client": "^11.0.0-rc.666",
     "@trpc/server": "^11.0.0-rc.666",
     "aws-sdk": "^2.1692.0",

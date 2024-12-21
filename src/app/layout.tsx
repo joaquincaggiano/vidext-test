@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import MainLayout from "@/components/layouts/main-layout";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -9,7 +10,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Vidext - Videos",
+  title: "VidextHub",
   description: "Mirá todos los videos de vidext",
 };
 
@@ -20,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} antialiased`}>{children}</body>
+      <body className={`${poppins.className} antialiased`}>
+        <MainLayout>{children}</MainLayout>
+      </body>
     </html>
   );
 }
