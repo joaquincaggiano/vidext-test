@@ -51,27 +51,6 @@ const MainLayout = ({ children }: Props) => {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-
-        <div />
-        {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-              <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-primary">VidextHub</h1>
-                <nav className="hidden md:flex space-x-8">
-                  <a
-                    href="/"
-                    className="text-muted-foreground hover:text-primary transition"
-                  >
-                    Inicio
-                  </a>
-                  <a
-                    href="#"
-                    className="text-muted-foreground hover:text-primary transition"
-                  >
-                    Crear
-                  </a>
-                </nav>
-              </div>
-            </div> */}
       </header>
 
       <main className="min-h-screen flex flex-col py-4 px-8 sm:px-12">
@@ -85,20 +64,20 @@ const MainLayout = ({ children }: Props) => {
           </p>
 
           <div className="flex items-center gap-5">
-          <a
-                href="/pdfs/terminos_y_condiciones.pdf"
-                target="_blank"
-                className="text-sm text-black hover:underline"
-              >
-                Términos y condiciones
-              </a>
-              <a
-                href="/pdfs/politica_y_privacidad.pdf"
-                target="_blank"
-                className="text-sm text-black hover:underline"
-              >
-                Política y privacidad
-              </a>
+            <a
+              href="/pdfs/terminos_y_condiciones.pdf"
+              target="_blank"
+              className="text-sm text-black hover:underline"
+            >
+              Términos y condiciones
+            </a>
+            <a
+              href="/pdfs/politica_y_privacidad.pdf"
+              target="_blank"
+              className="text-sm text-black hover:underline"
+            >
+              Política y privacidad
+            </a>
           </div>
         </div>
         {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
