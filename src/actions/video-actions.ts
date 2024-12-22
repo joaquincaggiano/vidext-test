@@ -1,7 +1,6 @@
 "use server"
 
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { serverClient } from "@/server/trpc/serverClient";
 import { appRouter } from '@/server';
 
 export const createVideo = async (formData: FormData) => {
