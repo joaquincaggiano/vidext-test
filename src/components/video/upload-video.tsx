@@ -1,17 +1,18 @@
 "use client";
+
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { FieldValues, Form, useForm } from "react-hook-form";
-import { Video, videoSchema } from "@/zod-schemas/video";
+import { FieldValues, useForm } from "react-hook-form";
+import { videoSchema } from "@/zod-schemas/video";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createVideo } from "@/actions/video-actions";
-import { Button } from "../ui/button";
-import { FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Label } from "../ui/label";
 import { useState } from "react";
 
 const UploadVideo = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState<File | undefined>(undefined);
+
   const {
     register,
     handleSubmit,
@@ -21,15 +22,19 @@ const UploadVideo = () => {
   });
 
   const onSubmit = async (data: FieldValues) => {
+    if (!selectedVideo) {
+      return;
+    }
+
     setIsLoading(true);
 
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
-    formData.append("video", data.video);
+    // formData.append("video", selectedVideo);
 
     try {
-      const response = await createVideo(formData);
+      const response = await createVideo(formData, selectedVideo);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -69,11 +74,12 @@ const UploadVideo = () => {
           <Label htmlFor="video">Video</Label>
           <Input
             id="video"
-            {...register('video')}
+            // {...register('video')}
             type="file"
             placeholder="Selecciona un video"
+            onChange={(e) => setSelectedVideo(e.target.files?.[0])}
           />
-          {errors.video && <p>Debes seleccionar un video</p>}
+          {/* {errors.video && <p>Debes seleccionar un video</p>} */}
         </div>
 
         <button
