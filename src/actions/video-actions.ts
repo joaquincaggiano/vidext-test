@@ -18,9 +18,9 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
 
-    const s3Key = `videos/${Date.now()}-${title}`;
+    const fileExtension = videoFile.name.split('.').pop();
+    const s3Key = `videos/${Date.now()}-${title}.${fileExtension}`;
 
-    // Convert File object to buffer
     const fileBuffer = await videoFile.arrayBuffer();
     const buffer = Buffer.from(fileBuffer);
 
