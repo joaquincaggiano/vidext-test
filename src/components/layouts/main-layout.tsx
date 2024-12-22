@@ -40,12 +40,12 @@ const MainLayout = ({ children }: Props) => {
 
             <NavigationMenuItem
               className={`${
-                path === "/create" && "bg-vidextGreen"
+                path === "/upload" && "bg-vidextGreen"
               } rounded-[20px] hover:bg-vidextGreen ease-in duration-150`}
             >
-              <Link href="/create" legacyBehavior passHref>
+              <Link href="/upload" legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Crear video
+                  Subir video
                 </NavigationMenuLink>
               </Link>
             </NavigationMenuItem>
