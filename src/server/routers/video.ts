@@ -3,7 +3,7 @@ import { publicProcedure } from "../trpc";
 import { db } from "@/db";
 import { router } from "../trpc";
 import { z } from "zod";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 export const videoRouter = router({
   videoList: publicProcedure
@@ -13,6 +13,7 @@ export const videoRouter = router({
       const allVideos = await db
         .select()
         .from(videos)
+        .orderBy(desc(videos.createdAt))
         .offset(page * 3 - 3)
         .limit(3);
       return allVideos;
@@ -50,16 +51,16 @@ export const videoRouter = router({
     .input(
       z.object({
         id: z.number(),
-        views: z.number(),
-        likes: z.number(),
+        key: z.enum(["views", "likes"]),
+        value: z.number(),
       })
     )
     .mutation(async (opts) => {
       const { input } = opts;
-      const video = await db
-        .update(videos)
-        .set(input)
-        .where(eq(videos.id, input.id));
+        const video = await db
+          .update(videos)
+          .set({ [input.key]: input.value })
+          .where(eq(videos.id, input.id));
       return video;
     }),
 });

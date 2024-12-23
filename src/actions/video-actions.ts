@@ -49,3 +49,11 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
   }
   redirect("/");
 };
+
+export const updateVideo = async (id: number, key: "views" | "likes", value: number) => {
+  try {
+    await serverClient.video.updateVideo.mutate({ id, key, value});
+  } catch (error) {
+    console.log(error);
+  }
+};
