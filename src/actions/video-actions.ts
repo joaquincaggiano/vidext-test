@@ -44,47 +44,8 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
       description,
       s3Url: `${bucketUrl}${s3Key}`,
     });
-    // const res = await fetch(
-    //   "http://localhost:3000/api/trpc/video.uploadVideo",
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       title,
-    //       description,
-    //       s3Url: `${bucketUrl}${s3Key}`,
-    //     }),
-    //   }
-    // );
-
-    // if (!res.ok) {
-    //   throw new Error("Error al subir el video");
-    // }
   } catch (error) {
     console.log(error);
   }
   redirect("/");
-};
-
-export const getVideos = async (page: number) => {
-  try {
-    const res = await fetch(`http://localhost:3000/api/trpc/video.videoList`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ page }),
-    });
-
-    if (!res.ok) {
-      throw new Error("Error al obtener los videos");
-    }
-
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
 };
