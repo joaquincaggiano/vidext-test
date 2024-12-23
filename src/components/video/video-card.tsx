@@ -54,7 +54,7 @@ const VideoCard = ({
             </div>
           </div>
 
-          <button className="w-full bg-vidextGreen py-2 rounded-[20px] border-2 border-vidextGreen hover:bg-[#FFFF] text-black text-base font-medium transition-all duration-200">Ver más</button>
+          <button className="w-full bg-vidextGreen py-2 rounded-[20px] border-2 border-vidextGreen hover:bg-[#FFFF] text-black text-base font-medium transition-all duration-200" onClick={() => router.push(`/video/${video.id}`)}>Ver más</button>
         </div>
       </CardContent>
     </Card>
