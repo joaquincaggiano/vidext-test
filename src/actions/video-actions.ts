@@ -13,11 +13,10 @@ const s3 = new S3Client({
 const s3Bucket = process.env.AWS_S3_BUCKET_NAME || "";
 
 export const createVideo = async (formData: FormData, videoFile: File) => {
-  console.log("Se ejecuta la función createVideo");
   try {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-
+    
     const fileExtension = videoFile.name.split('.').pop();
     const s3Key = `videos/${Date.now()}-${title.replace(/\s/g, '-')}.${fileExtension}`;
 

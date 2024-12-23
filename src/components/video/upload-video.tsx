@@ -12,6 +12,7 @@ const UploadVideo = () => {
   const [selectedVideo, setSelectedVideo] = useState<File | undefined>(
     undefined
   );
+  const [videoError, setVideoError] = useState<string | null>(null);
 
   const {
     register,
@@ -24,6 +25,12 @@ const UploadVideo = () => {
 
   const onSubmit = async (data: FieldValues) => {
     if (!selectedVideo) {
+      setVideoError("Selecciona un video");
+      return;
+    }
+
+    if (selectedVideo.size > 100000000) {
+      setVideoError("El video no puede ser mayor a 100MB");
       return;
     }
 
@@ -49,7 +56,8 @@ const UploadVideo = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex justify-center items-center"
     >
-      <div className="flex flex-col items-center justify-center gap-5 w-[450px] border-[1px] border-[#8c8c8c] p-5 rounded-[20px] shadow-lg">
+      <div className="flex flex-col items-center justify-center gap-5 w-full max-w-[450px] border-[1px] border-[#8c8c8c] p-5 rounded-[20px] shadow-lg">
+        {/* Title */}
         <div className="flex flex-col gap-2 w-full ">
           <Label htmlFor="title">Título</Label>
           <div className="flex flex-col gap-[2px] w-full">
@@ -67,6 +75,7 @@ const UploadVideo = () => {
           </div>
         </div>
 
+        {/* Description */}
         <div className="flex flex-col gap-2 w-full">
           <Label htmlFor="description">Descripción</Label>
           <div className="flex flex-col gap-[2px] w-full">
@@ -82,18 +91,24 @@ const UploadVideo = () => {
           </div>
         </div>
 
+        {/* Video */}
         <div className="flex flex-col gap-2 w-full">
           <Label htmlFor="video">Video</Label>
-          <input
-            id="video"
-            // {...register('video')}
-            type="file"
-            placeholder="Selecciona un video"
-            accept="video/*"
-            className="input-vidext"
-            onChange={(e) => setSelectedVideo(e.target.files?.[0])}
-          />
-          {/* {errors.video && <p>Debes seleccionar un video</p>} */}
+          <div className="flex flex-col gap-[2px] w-full">
+            <input
+              id="video"
+              type="file"
+              placeholder="Selecciona un video"
+              accept="video/*"
+              className="input-vidext"
+              onChange={(e) => {
+                setVideoError(null);
+                setSelectedVideo(e.target.files?.[0])}}
+            />
+            <div className="text-red-500 text-xs font-medium">
+              {videoError || ""}
+            </div>
+          </div>
         </div>
 
         <button

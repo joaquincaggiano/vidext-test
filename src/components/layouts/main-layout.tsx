@@ -22,7 +22,9 @@ const MainLayout = ({ children }: Props) => {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="bg-white border-b border-[#ECECEC] flex justify-between items-center py-4 px-8 sm:px-12">
+      <Link href="/">
         <VidextSvg width="96" height="28" />
+      </Link>
 
         <NavigationMenu>
           <NavigationMenuList>
