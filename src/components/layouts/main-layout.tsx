@@ -21,7 +21,7 @@ const MainLayout = ({ children }: Props) => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-white border-b flex justify-between items-center py-4 px-8 sm:px-12">
+      <header className="bg-white border-b border-[#ECECEC] flex justify-between items-center py-4 px-8 sm:px-12">
         <VidextSvg width="96" height="28" />
 
         <NavigationMenu>
@@ -57,7 +57,7 @@ const MainLayout = ({ children }: Props) => {
         {children}
       </main>
 
-      <footer className="bg-white border-t py-4 px-8 sm:px-12">
+      <footer className="bg-white border-t border-[#ECECEC] py-4 px-8 sm:px-12">
         <div className="flex justify-between items-center">
           <p className="text-black text-sm font-normal">
             © 2024 VidextHub. Todos los derechos reservados.

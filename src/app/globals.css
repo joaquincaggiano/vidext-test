@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input-vidext {
+  border: 1px solid #8c8c8c;
+  background-color: #FFFFFF;
+  padding: 14px;
+  border-radius: 10px;
+  color: #000000;
+  font-size: 14px;
+  font-weight: 400;
+  outline: none;
+}
+
+.input-vidext::placeholder {
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+.input-vidext:focus {
+    border: 1.5px solid #000000;
+}
