@@ -16,7 +16,7 @@ export const videoRouter = router({
     const video = await db.select().from(videos).where(eq(videos.id, input));
     return video;
   }),
-  createVideo: publicProcedure
+  uploadVideo: publicProcedure
     .input(
       z.object({
         title: z
@@ -30,10 +30,15 @@ export const videoRouter = router({
     )
     .mutation(async (opts) => {
       const { input } = opts;
-      const video = await db
-        .insert(videos)
-        .values({ ...input, views: 0, likes: 0 });
-      return video;
+
+      try {
+        const video = await db
+          .insert(videos)
+          .values({ ...input, views: 0, likes: 0 });
+        return video;
+      } catch (error) {
+        console.log("error uploading video", error);
+      }
     }),
   updateVideo: publicProcedure
     .input(

@@ -1,7 +1,6 @@
 "use server";
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { appRouter } from "@/server";
 import { bucketUrl } from "@/constants/bucketUrl";
 
 const s3 = new S3Client({
@@ -31,17 +30,23 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
       Body: buffer,
     };
 
+    // Subimos el video a S3
     const command = new PutObjectCommand(params);
-    const data = await s3.send(command);
-    console.log("data", data);
+    await s3.send(command);
 
-    // const addVideo = await appRouter.video.createVideo.caller({
-    //   title,
-    //   description,
-    //   s3Url: `${bucketUrl}${s3Key}`,
-    // });
+    const res = await fetch("http://localhost:3000/api/trpc/video.uploadVideo", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        s3Url: `${bucketUrl}${s3Key}`,
+      }),
+    });
 
-    // console.log("addVideo", addVideo);
+    console.log("res", res);
   } catch (error) {
     console.log(error);
   }
