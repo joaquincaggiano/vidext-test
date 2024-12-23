@@ -11,12 +11,15 @@ import { useState } from "react";
 
 const UploadVideo = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedVideo, setSelectedVideo] = useState<File | undefined>(undefined);
+  const [selectedVideo, setSelectedVideo] = useState<File | undefined>(
+    undefined
+  );
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: zodResolver(videoSchema),
   });
@@ -31,11 +34,11 @@ const UploadVideo = () => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
-    // formData.append("video", selectedVideo);
 
     try {
       const response = await createVideo(formData, selectedVideo);
       console.log(response);
+      reset();
     } catch (error) {
       console.log(error);
     } finally {
@@ -51,23 +54,32 @@ const UploadVideo = () => {
       <div className="flex flex-col items-center justify-center gap-5 w-[400px]">
         <div className="flex flex-col gap-2 w-full">
           <Label htmlFor="title">Título</Label>
-          <Input
-            id="title"
-            {...register('title')}
-            type="text"
-            placeholder="Título del video"
-          />
-          {errors.title && <p>Debes ingresar un título</p>}
+          <div className="flex flex-col w-full">
+            <Input
+              id="title"
+              {...register("title")}
+              type="text"
+              placeholder="Título del video"
+            />
+
+            <div className="text-red-500 text-sm font-medium">
+              {errors.title?.message?.toString() || ""}
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col gap-2 w-full">
           <Label htmlFor="description">Descripción</Label>
-          <Textarea
-            id="description"
-            {...register('description')}
-            placeholder="Descripción del video"
-          />
-          {errors.description && <p>Debes ingresar una descripción</p>}
+          <div className="flex flex-col w-full">
+            <Textarea
+              id="description"
+              {...register("description")}
+              placeholder="Descripción del video"
+            />
+            <div className="text-red-500 text-sm font-medium">
+              {errors.description?.message?.toString() || ""}
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col gap-2 w-full">
@@ -77,6 +89,7 @@ const UploadVideo = () => {
             // {...register('video')}
             type="file"
             placeholder="Selecciona un video"
+            accept="video/*"
             onChange={(e) => setSelectedVideo(e.target.files?.[0])}
           />
           {/* {errors.video && <p>Debes seleccionar un video</p>} */}
