@@ -2,6 +2,8 @@
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { bucketUrl } from "@/constants/bucketUrl";
+import { redirect } from "next/navigation";
+import { serverClient } from "@/client/server-client";
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION || "",
@@ -36,39 +38,53 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
     const command = new PutObjectCommand(params);
     await s3.send(command);
 
-    const res = await fetch(
-      "http://localhost:3000/api/trpc/video.uploadVideo",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          description,
-          s3Url: `${bucketUrl}${s3Key}`,
-        }),
-      }
-    );
+    // Creamos el video en la base de datos
+    await serverClient.video.uploadVideo.mutate({
+      title,
+      description,
+      s3Url: `${bucketUrl}${s3Key}`,
+    });
+    // const res = await fetch(
+    //   "http://localhost:3000/api/trpc/video.uploadVideo",
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       title,
+    //       description,
+    //       s3Url: `${bucketUrl}${s3Key}`,
+    //     }),
+    //   }
+    // );
 
-    console.log("res", res);
+    // if (!res.ok) {
+    //   throw new Error("Error al subir el video");
+    // }
   } catch (error) {
     console.log(error);
   }
+  redirect("/");
 };
 
 export const getVideos = async (page: number) => {
-  const res = await fetch(
-    `http://localhost:3000/api/trpc/video.videoList`,
-    {
+  try {
+    const res = await fetch(`http://localhost:3000/api/trpc/video.videoList`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ page }),
-    }
-  );
+    });
 
-  const data = await res.json();
-  return data;
+    if (!res.ok) {
+      throw new Error("Error al obtener los videos");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };

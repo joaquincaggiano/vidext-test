@@ -6,24 +6,24 @@ import { z } from "zod";
 import { eq } from "drizzle-orm";
 
 export const videoRouter = router({
-  // videoList: publicProcedure.query(async (opts) => {
-  //   const { input } = opts;
-  //   console.log(input)
-  //   const allVideos = await db.select().from(videos);
-  //   return allVideos;
-  // }),
-  videoList: publicProcedure
-    .input(z.object({ page: z.number().optional() }))
-    // aca tiene que ser un .query y no .mutation, tengo que ver como hacer para que sea un query
-    .mutation(async ({ input }) => {
-      const { page = 1 } = input;
-      const allVideos = await db
-        .select()
-        .from(videos)
-        .offset(page * 10 - 10)
-        .limit(10);
-      return allVideos;
-    }),
+  videoList: publicProcedure.query(async () => {
+    // const { input } = opts;
+    // console.log(input)
+    const allVideos = await db.select().from(videos);
+    return allVideos;
+  }),
+  // videoList: publicProcedure
+  //   .input(z.object({ page: z.number().optional() }))
+  //   // aca tiene que ser un .query y no .mutation, tengo que ver como hacer para que sea un query
+  //   .mutation(async ({ input }) => {
+  //     const { page = 1 } = input;
+  //     const allVideos = await db
+  //       .select()
+  //       .from(videos)
+  //       .offset(page * 10 - 10)
+  //       .limit(10);
+  //     return allVideos;
+  //   }),
   videoById: publicProcedure.input(z.coerce.number()).query(async (opts) => {
     const { input } = opts;
     const video = await db.select().from(videos).where(eq(videos.id, input));

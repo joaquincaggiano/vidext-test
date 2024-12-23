@@ -52,74 +52,79 @@ const UploadVideo = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-center items-center"
-    >
-      <div className="flex flex-col items-center justify-center gap-5 w-full max-w-[450px] border-[1px] border-[#8c8c8c] p-5 rounded-[20px] shadow-lg">
-        {/* Title */}
-        <div className="flex flex-col gap-2 w-full ">
-          <Label htmlFor="title">Título</Label>
-          <div className="flex flex-col gap-[2px] w-full">
-            <input
-              id="title"
-              {...register("title")}
-              type="text"
-              placeholder="Título del video"
-              className="input-vidext"
-            />
+    <>
+      <h1 className="text-2xl font-semibold text-center">Comparte tu video</h1>
+      
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex justify-center items-center"
+      >
+        <div className="flex flex-col items-center justify-center gap-5 w-full max-w-[450px] border-[1px] border-[#8c8c8c] p-5 rounded-[20px] shadow-lg">
+          {/* Title */}
+          <div className="flex flex-col gap-2 w-full ">
+            <Label htmlFor="title">Título</Label>
+            <div className="flex flex-col gap-[2px] w-full">
+              <input
+                id="title"
+                {...register("title")}
+                type="text"
+                placeholder="Título del video"
+                className="input-vidext"
+              />
 
-            <div className="text-red-500 text-xs font-medium">
-              {errors.title?.message?.toString() || ""}
+              <div className="text-red-500 text-xs font-medium">
+                {errors.title?.message?.toString() || ""}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Description */}
-        <div className="flex flex-col gap-2 w-full">
-          <Label htmlFor="description">Descripción</Label>
-          <div className="flex flex-col gap-[2px] w-full">
-            <textarea
-              id="description"
-              {...register("description")}
-              placeholder="Descripción del video"
-              className="input-vidext"
-            />
-            <div className="text-red-500 text-xs font-medium">
-              {errors.description?.message?.toString() || ""}
+          {/* Description */}
+          <div className="flex flex-col gap-2 w-full">
+            <Label htmlFor="description">Descripción</Label>
+            <div className="flex flex-col gap-[2px] w-full">
+              <textarea
+                id="description"
+                {...register("description")}
+                placeholder="Descripción del video"
+                className="input-vidext"
+              />
+              <div className="text-red-500 text-xs font-medium">
+                {errors.description?.message?.toString() || ""}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Video */}
-        <div className="flex flex-col gap-2 w-full">
-          <Label htmlFor="video">Video</Label>
-          <div className="flex flex-col gap-[2px] w-full">
-            <input
-              id="video"
-              type="file"
-              placeholder="Selecciona un video"
-              accept="video/*"
-              className="input-vidext"
-              onChange={(e) => {
-                setVideoError(null);
-                setSelectedVideo(e.target.files?.[0])}}
-            />
-            <div className="text-red-500 text-xs font-medium">
-              {videoError || ""}
+          {/* Video */}
+          <div className="flex flex-col gap-2 w-full">
+            <Label htmlFor="video">Video</Label>
+            <div className="flex flex-col gap-[2px] w-full">
+              <input
+                id="video"
+                type="file"
+                placeholder="Selecciona un video"
+                accept="video/*"
+                className="input-vidext"
+                onChange={(e) => {
+                  setVideoError(null);
+                  setSelectedVideo(e.target.files?.[0]);
+                }}
+              />
+              <div className="text-red-500 text-xs font-medium">
+                {videoError || ""}
+              </div>
             </div>
           </div>
-        </div>
 
-        <button
-          type="submit"
-          className="w-full bg-vidextGreen py-2 rounded-[20px] border-2 border-vidextGreen hover:bg-[#FFFF] text-black text-base font-medium transition-all duration-200"
-          disabled={isLoading}
-        >
-          {isLoading ? "Subiendo..." : "Subir"}
-        </button>
-      </div>
-    </form>
+          <button
+            type="submit"
+            className="w-full bg-vidextGreen py-2 rounded-[20px] border-2 border-vidextGreen hover:bg-[#FFFF] text-black text-base font-medium transition-all duration-200"
+            disabled={isLoading}
+          >
+            {isLoading ? "Subiendo..." : "Subir"}
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

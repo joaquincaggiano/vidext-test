@@ -55,7 +55,7 @@ const MainLayout = ({ children }: Props) => {
         </NavigationMenu>
       </header>
 
-      <main className="min-h-screen flex flex-col py-4 px-8 sm:px-12">
+      <main className="min-h-screen flex flex-col py-5 px-8 sm:px-12">
         {children}
       </main>
 
