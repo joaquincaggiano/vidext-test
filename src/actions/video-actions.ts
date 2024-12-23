@@ -16,9 +16,12 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
   try {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    
-    const fileExtension = videoFile.name.split('.').pop();
-    const s3Key = `videos/${Date.now()}-${title.replace(/\s/g, '-')}.${fileExtension}`;
+
+    const fileExtension = videoFile.name.split(".").pop();
+    const s3Key = `videos/${Date.now()}-${title.replace(
+      /\s/g,
+      "-"
+    )}.${fileExtension}`;
 
     const fileBuffer = await videoFile.arrayBuffer();
     const buffer = Buffer.from(fileBuffer);
@@ -33,20 +36,39 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
     const command = new PutObjectCommand(params);
     await s3.send(command);
 
-    const res = await fetch("http://localhost:3000/api/trpc/video.uploadVideo", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        s3Url: `${bucketUrl}${s3Key}`,
-      }),
-    });
+    const res = await fetch(
+      "http://localhost:3000/api/trpc/video.uploadVideo",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          s3Url: `${bucketUrl}${s3Key}`,
+        }),
+      }
+    );
 
     console.log("res", res);
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getVideos = async (page: number) => {
+  const res = await fetch(
+    `http://localhost:3000/api/trpc/video.videoList`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ page }),
+    }
+  );
+
+  const data = await res.json();
+  return data;
 };

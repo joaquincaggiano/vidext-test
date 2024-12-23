@@ -14,3 +14,5 @@ export const videos = pgTable("videos", {
     .defaultNow()
     .notNull(), // Última actualización
 });
+
+export type VideoSchema = typeof videos.$inferInsert;
