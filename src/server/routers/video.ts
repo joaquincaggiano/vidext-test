@@ -3,7 +3,7 @@ import { publicProcedure } from "../trpc";
 import { db } from "@/db";
 import { router } from "../trpc";
 import { z } from "zod";
-import { desc, eq } from "drizzle-orm";
+import { count, desc, eq } from "drizzle-orm";
 
 export const videoRouter = router({
   videoList: publicProcedure
@@ -16,7 +16,10 @@ export const videoRouter = router({
         .orderBy(desc(videos.createdAt))
         .offset(page * 3 - 3)
         .limit(3);
-      return allVideos;
+
+      const totalVideos = await db.select({ count: count() }).from(videos);
+      const totalPages = Math.ceil(totalVideos[0].count / 3);
+      return { videos: allVideos, totalPages };
     }),
   videoById: publicProcedure.input(z.coerce.number()).query(async (opts) => {
     const { input } = opts;
