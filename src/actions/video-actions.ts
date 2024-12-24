@@ -4,6 +4,7 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { bucketUrl } from "@/constants/bucketUrl";
 import { redirect } from "next/navigation";
 import { serverClient } from "@/client/server-client";
+import { revalidatePath } from "next/cache";
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION || "",
@@ -53,6 +54,8 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
 export const updateVideo = async (id: number, key: "views" | "likes", value: number) => {
   try {
     await serverClient.video.updateVideo.mutate({ id, key, value});
+
+    revalidatePath("/");
   } catch (error) {
     console.log(error);
   }
