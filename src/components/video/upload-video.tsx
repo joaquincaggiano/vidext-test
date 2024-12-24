@@ -133,8 +133,8 @@ const UploadVideo = () => {
         <DialogContent className="bg-white" style={{ borderRadius: "10px" }}>
           <DialogHeader>
             <DialogTitle className="text-black text-center text-base font-medium">Cargando video...</DialogTitle>
-            <DialogDescription>
-              <div className="text-black text-center text-sm font-normal">Por favor espera un momento.</div>
+            <DialogDescription className="text-black text-center text-sm font-normal">
+              Por favor espera un momento.
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
