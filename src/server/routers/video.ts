@@ -14,11 +14,11 @@ export const videoRouter = router({
         .select()
         .from(videos)
         .orderBy(desc(videos.createdAt))
-        .offset(page * 3 - 3)
-        .limit(3);
+        .offset(page * 6 - 6)
+        .limit(6);
 
       const totalVideos = await db.select({ count: count() }).from(videos);
-      const totalPages = Math.ceil(totalVideos[0].count / 3);
+      const totalPages = Math.ceil(totalVideos[0].count / 6);
       return { videos: allVideos, totalPages };
     }),
   videoById: publicProcedure.input(z.coerce.number()).query(async (opts) => {
@@ -60,10 +60,10 @@ export const videoRouter = router({
     )
     .mutation(async (opts) => {
       const { input } = opts;
-        const video = await db
-          .update(videos)
-          .set({ [input.key]: input.value })
-          .where(eq(videos.id, input.id));
+      const video = await db
+        .update(videos)
+        .set({ [input.key]: input.value })
+        .where(eq(videos.id, input.id));
       return video;
     }),
 });

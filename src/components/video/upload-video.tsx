@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createVideo } from "@/actions/video-actions";
 import { Label } from "../ui/label";
 import { useState } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
 
 const UploadVideo = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,6 +14,7 @@ const UploadVideo = () => {
     undefined
   );
   const [videoError, setVideoError] = useState<string | null>(null);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const {
     register,
@@ -35,6 +37,7 @@ const UploadVideo = () => {
     }
 
     setIsLoading(true);
+    setOpenDialog(true);
 
     const formData = new FormData();
     formData.append("title", data.title);
@@ -48,13 +51,14 @@ const UploadVideo = () => {
       console.log(error);
     } finally {
       setIsLoading(false);
+      setOpenDialog(false);
     }
   };
 
   return (
     <>
       <h1 className="text-2xl font-semibold text-center">Comparte tu video</h1>
-      
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex justify-center items-center"
@@ -124,6 +128,17 @@ const UploadVideo = () => {
           </button>
         </div>
       </form>
+
+      <Dialog open={openDialog}>
+        <DialogContent className="bg-white" style={{ borderRadius: "10px" }}>
+          <DialogHeader>
+            <DialogTitle className="text-black text-center text-base font-medium">Cargando video...</DialogTitle>
+            <DialogDescription>
+              <div className="text-black text-center text-sm font-normal">Por favor espera un momento.</div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

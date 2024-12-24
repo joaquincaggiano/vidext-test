@@ -32,7 +32,7 @@ const VideoCard = ({
               src={video.s3Url}
               controls
               onEnded={() => handleUpdate("views", video.views + 1)}
-              autoPlay
+              // autoPlay
               className="w-full h-full rounded-md"
             />
           </div>
