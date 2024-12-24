@@ -45,10 +45,11 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
       description,
       s3Url: `${bucketUrl}${s3Key}`,
     });
-  } catch (error) {
-    console.log(error);
+
+    return { success: true, message: "Video subido correctamente" };
+  } catch (error: any) {
+    return { success: false, message: error.message || "Error al subir el video" };
   }
-  redirect("/");
 };
 
 export const updateVideo = async (id: number, key: "views" | "likes", value: number) => {
@@ -56,7 +57,8 @@ export const updateVideo = async (id: number, key: "views" | "likes", value: num
     await serverClient.video.updateVideo.mutate({ id, key, value});
 
     revalidatePath("/");
-  } catch (error) {
-    console.log(error);
+    return { success: true, message: "Video actualizado correctamente" };
+  } catch (error: any) {
+    return { success: false, message: error.message || "Error al actualizar el video" };
   }
 };

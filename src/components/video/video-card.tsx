@@ -10,18 +10,14 @@ import { VideoInterface } from "@/interfaces/video";
 
 const VideoCard = ({
   video,
+  isLoading,
+  handleUpdate,
 }: {
   video: VideoInterface;
+  isLoading: boolean;
+  handleUpdate: (videoId: number, key: "views" | "likes", value: number) => void;
 }) => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleUpdate = async (key: "views" | "likes", value: number) => {
-    setIsLoading(true);
-    await updateVideo(video.id, key, value);
-    setIsLoading(false);
-    // router.refresh();
-  };
 
   return (
     <Card className="overflow-hidden group hover:shadow-lg transition-shadow duration-300">
@@ -31,7 +27,7 @@ const VideoCard = ({
             <video
               src={video.s3Url}
               controls
-              onEnded={() => handleUpdate("views", video.views + 1)}
+              onEnded={() => handleUpdate(video.id, "views", video.views + 1)}
               // autoPlay
               className="w-full h-full rounded-md"
             />
@@ -42,7 +38,7 @@ const VideoCard = ({
             <h3 className="font-semibold text-lg mb-2">{video.title}</h3>
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1">
-                <button onClick={() => handleUpdate("likes", video.likes + 1)} disabled={isLoading}>
+                <button onClick={() => handleUpdate(video.id, "likes", video.likes + 1)} disabled={isLoading}>
                   <LikeSvg width={24} height={24} color="#0077d2" />
                 </button>
                 <p className="text-sm font-medium">{video.likes}</p>

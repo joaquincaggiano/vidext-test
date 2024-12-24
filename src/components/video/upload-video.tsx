@@ -6,15 +6,27 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createVideo } from "@/actions/video-actions";
 import { Label } from "../ui/label";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
+import ModalError from "../modal/modal-error";
+import { useRouter } from "next/navigation";
 
 const UploadVideo = () => {
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState<File | undefined>(
     undefined
   );
   const [videoError, setVideoError] = useState<string | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
+  const [openModalError, setOpenModalError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const {
     register,
@@ -45,10 +57,16 @@ const UploadVideo = () => {
 
     try {
       const response = await createVideo(formData, selectedVideo);
-      console.log(response);
-      reset();
-    } catch (error) {
-      console.log(error);
+      if (response.success) {
+        reset();
+        router.push("/")
+      } else {
+        setOpenModalError(true);
+        setErrorMessage(response.message);
+      }
+    } catch (error: any) {
+      setOpenModalError(true);
+      setErrorMessage(error.message || "Error al subir el video");
     } finally {
       setIsLoading(false);
       setOpenDialog(false);
@@ -132,13 +150,21 @@ const UploadVideo = () => {
       <Dialog open={openDialog}>
         <DialogContent className="bg-white" style={{ borderRadius: "10px" }}>
           <DialogHeader>
-            <DialogTitle className="text-black text-center text-base font-medium">Cargando video...</DialogTitle>
+            <DialogTitle className="text-black text-center text-base font-medium">
+              Cargando video...
+            </DialogTitle>
             <DialogDescription className="text-black text-center text-sm font-normal">
               Por favor espera un momento.
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>
+
+      <ModalError
+        message={errorMessage}
+        open={openModalError}
+        setOpen={setOpenModalError}
+      />
     </>
   );
 };
