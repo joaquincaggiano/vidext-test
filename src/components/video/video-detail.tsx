@@ -17,7 +17,7 @@ const VideoDetail = ({ video }: { video: VideoInterface }) => {
     setIsLoading(true);
     await updateVideo(video.id, key, value);
     setIsLoading(false);
-    router.refresh();
+    // router.refresh();
   };
   return (
     <>
