@@ -3,8 +3,6 @@
 import { Card, CardContent } from "../ui/card";
 import LikeSvg from "../icons/like-svg";
 import ViewSvg from "../icons/view-svg";
-import { useState } from "react";
-import { updateVideo } from "@/actions/video-actions";
 import { useRouter } from "next/navigation";
 import { VideoInterface } from "@/interfaces/video";
 

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+
 import {
   Dialog,
   DialogContent,
@@ -7,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { Button } from "../ui/button";
 
 const ModalError = ({
   message,

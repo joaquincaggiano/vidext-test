@@ -2,7 +2,6 @@
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { bucketUrl } from "@/constants/bucketUrl";
-import { redirect } from "next/navigation";
 import { serverClient } from "@/client/server-client";
 import { revalidatePath } from "next/cache";
 
