@@ -60,7 +60,7 @@ const MainLayout = ({ children }: Props) => {
       </main>
 
       <footer className="bg-white border-t border-[#ECECEC] py-5 px-8 sm:px-12">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col-reverse gap-5 md:gap-0 md:flex-row md:justify-between items-center">
           <p className="text-black text-sm font-normal">
             © 2024 VidextHub. Todos los derechos reservados.
           </p>

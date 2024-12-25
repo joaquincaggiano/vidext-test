@@ -8,6 +8,7 @@ import LikeSvg from "../icons/like-svg";
 import ViewSvg from "../icons/view-svg";
 import { Button } from "../ui/button";
 import ArrowLeftSvg from "../icons/arrow-left-svg";
+import { formattedDate } from "@/utils/date-functions";
 
 const VideoDetail = ({ video }: { video: VideoInterface }) => {
   const router = useRouter();
@@ -17,8 +18,8 @@ const VideoDetail = ({ video }: { video: VideoInterface }) => {
     setIsLoading(true);
     await updateVideo(video.id, key, value);
     setIsLoading(false);
-    // router.refresh();
   };
+
   return (
     <>
       <Button
@@ -30,42 +31,49 @@ const VideoDetail = ({ video }: { video: VideoInterface }) => {
         <ArrowLeftSvg />
       </Button>
 
-      <div className="flex gap-4">
-        {/* Video */}
-        <div className="relative aspect-video">
-          <div className="aspect-video relative">
+      <div className="flex flex-col lg:flex-row gap-4 mb-10">
+        {/* Video e info */}
+        <div className="flex flex-col gap-2">
+          <div className="relative aspect-video">
             <video
               src={video.s3Url}
               controls
               onEnded={() => handleUpdate("views", video.views + 1)}
               autoPlay
-              className="w-full max-w-[800px] h-full rounded-md"
+              width={800}
+              height={450}
+              // className="w-full max-w-[800px] h-full rounded-md"
             />
+          </div>
+
+          <div className="flex justify-between items-center">
+            <div className="text-sm text-black font-normal">
+              {formattedDate(video.createdAt)}
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => handleUpdate("likes", video.likes + 1)}
+                  disabled={isLoading}
+                >
+                  <LikeSvg width={24} height={24} color="#0077d2" />
+                </button>
+                <p className="text-sm font-medium">{video.likes}</p>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <ViewSvg width={24} height={24} color="#000000" />
+                <p className="text-sm font-medium">{video.views}</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Info */}
+        {/* Title and description */}
         <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-semibold">{video.title}</h1>
+          <h1 className="text-lg sm:text-2xl font-semibold">{video.title}</h1>
 
           <p className="text-sm text-black">{video.description}</p>
-
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <button
-                onClick={() => handleUpdate("likes", video.likes + 1)}
-                disabled={isLoading}
-              >
-                <LikeSvg width={24} height={24} color="#0077d2" />
-              </button>
-              <p className="text-sm font-medium">{video.likes}</p>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <ViewSvg width={24} height={24} color="#000000" />
-              <p className="text-sm font-medium">{video.views}</p>
-            </div>
-          </div>
         </div>
       </div>
     </>

@@ -79,7 +79,7 @@ const UploadVideo = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex justify-center items-center"
+        className="flex justify-center items-center mb-10"
       >
         <div className="flex flex-col items-center justify-center gap-5 w-full max-w-[450px] border-[1px] border-[#8c8c8c] p-5 rounded-[20px] shadow-lg">
           {/* Title */}
