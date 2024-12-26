@@ -46,8 +46,8 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
     });
 
     return { success: true, message: "Video subido correctamente" };
-  } catch (error: any) {
-    return { success: false, message: error.message || "Error al subir el video" };
+  } catch (error: unknown) {
+    return { success: false, message: error instanceof Error ? error.message : "Error al subir el video" };
   }
 };
 
@@ -57,7 +57,11 @@ export const updateVideo = async (id: number, key: "views" | "likes", value: num
 
     revalidatePath("/");
     return { success: true, message: "Video actualizado correctamente" };
-  } catch (error: any) {
-    return { success: false, message: error.message || "Error al actualizar el video" };
+  } catch (error: unknown) {
+    return {
+      success: false,
+      message:
+        error instanceof Error ? error.message : "Error al actualizar el video",
+    };
   }
 };
