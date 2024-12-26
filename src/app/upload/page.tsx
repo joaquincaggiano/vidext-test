@@ -1,5 +1,3 @@
-"use client";
-
 import UploadVideo from "@/components/video/upload-video";
 
 const UploadVideoPage = () => {
