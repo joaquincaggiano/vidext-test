@@ -16,7 +16,7 @@ import {
 import ModalError from "../modal/modal-error";
 import { useRouter } from "next/navigation";
 
-const UploadVideo = () => {
+const UploadVideo = ({ userId }: { userId: string }) => {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -82,8 +82,10 @@ const UploadVideo = () => {
         className="flex justify-center items-center mb-10"
       >
         <div className="flex flex-col items-center justify-center gap-5 w-full max-w-[450px] border-[1px] border-[#8c8c8c] p-5 rounded-[20px] shadow-lg">
+          <input type="hidden" {...register("userId")} value={userId} />
+
           {/* Title */}
-          <div className="flex flex-col gap-2 w-full ">
+          <div className="flex flex-col gap-2 w-full">
             <Label htmlFor="title">Título</Label>
             <div className="flex flex-col gap-[2px] w-full">
               <input

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import MainLayout from "@/components/layouts/main-layout";
+import MainLayout from "@/components/layouts/auth-layout";
 import "./globals.css";
 import Provider from "@/components/providers/Provider";
 
@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${poppins.className} antialiased`}>
         <Provider>
-          <MainLayout>{children}</MainLayout>
+          {children}
         </Provider>
       </body>
     </html>

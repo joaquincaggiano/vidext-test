@@ -18,6 +18,7 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
   try {
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
+    const userId = formData.get("userId") as string;
 
     const fileExtension = videoFile.name.split(".").pop();
     const s3Key = `videos/${Date.now()}-${title.replace(
@@ -43,6 +44,7 @@ export const createVideo = async (formData: FormData, videoFile: File) => {
       title,
       description,
       s3Url: `${bucketUrl}${s3Key}`,
+      userId,
     });
 
     return { success: true, message: "Video subido correctamente" };

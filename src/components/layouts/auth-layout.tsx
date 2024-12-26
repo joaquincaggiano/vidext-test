@@ -16,7 +16,7 @@ interface Props {
   children: ReactNode;
 }
 
-const MainLayout = ({ children }: Props) => {
+const AuthLayout = ({ children }: Props) => {
   const path = usePathname();
 
   return (
@@ -87,4 +87,4 @@ const MainLayout = ({ children }: Props) => {
   );
 };
 
-export default MainLayout;
+export default AuthLayout;

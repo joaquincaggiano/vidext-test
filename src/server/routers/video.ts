@@ -1,12 +1,11 @@
 import { videos } from "@/db/schema";
-import { publicProcedure } from "../trpc";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { db } from "@/db";
-import { router } from "../trpc";
 import { z } from "zod";
 import { count, desc, eq } from "drizzle-orm";
 
 export const videoRouter = router({
-  videoList: publicProcedure
+  videoList: protectedProcedure
     .input(z.object({ page: z.number().optional() }))
     .query(async ({ input }) => {
       const { page = 1 } = input;
@@ -21,14 +20,15 @@ export const videoRouter = router({
       const totalPages = Math.ceil(totalVideos[0].count / 6);
       return { videos: allVideos, totalPages };
     }),
-  videoById: publicProcedure.input(z.coerce.number()).query(async (opts) => {
+  videoById: protectedProcedure.input(z.coerce.number()).query(async (opts) => {
     const { input } = opts;
     const video = await db.select().from(videos).where(eq(videos.id, input));
     return video;
   }),
-  uploadVideo: publicProcedure
+  uploadVideo: protectedProcedure
     .input(
       z.object({
+        userId: z.string(),
         title: z
           .string()
           .min(3, { message: "El título debe tener al menos 3 caracteres" }),
