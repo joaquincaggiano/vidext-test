@@ -84,6 +84,7 @@ const VideoList = ({ videos, totalPages, page }: Props) => {
             <PaginationItem>
               <PaginationPrevious
                 href={page === 1 ? "#" : `/?page=${page - 1}`}
+                disabled={page === 1}
               />
             </PaginationItem>
 
@@ -103,6 +104,7 @@ const VideoList = ({ videos, totalPages, page }: Props) => {
 
             <PaginationItem>
               <PaginationNext
+                disabled={page === totalPages}
                 href={page === totalPages ? "#" : `/?page=${page + 1}`}
               />
             </PaginationItem>
