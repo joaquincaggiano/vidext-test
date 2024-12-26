@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import VidextSvg from "@/components/svgs/vidext-svg";
-import { Button } from "@/components/ui/button";
 
 const ErrorAuthCard = () => {
   const router = useRouter();
