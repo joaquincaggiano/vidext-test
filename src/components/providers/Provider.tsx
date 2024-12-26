@@ -11,7 +11,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: "https://vidext-hub.up.railway.app/api/trpc",
+          url: `${process.env.NEXT_PUBLIC_APP_URL}/api/trpc`,
         }),
       ],
     })
