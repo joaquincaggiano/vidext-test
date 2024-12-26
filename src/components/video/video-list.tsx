@@ -39,9 +39,11 @@ const VideoList = ({ videos, totalPages, page }: Props) => {
         setOpenModalError(true);
         setErrorMessage(response.message);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       setOpenModalError(true);
-      setErrorMessage(error.message || "Error al subir el video");
+      setErrorMessage(
+        error instanceof Error ? error.message : "Error al actualizar el video"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -84,6 +86,7 @@ const VideoList = ({ videos, totalPages, page }: Props) => {
             <PaginationItem>
               <PaginationPrevious
                 href={page === 1 ? "#" : `/?page=${page - 1}`}
+                disabled={page === 1}
               />
             </PaginationItem>
 
@@ -103,6 +106,7 @@ const VideoList = ({ videos, totalPages, page }: Props) => {
 
             <PaginationItem>
               <PaginationNext
+                disabled={page === totalPages}
                 href={page === totalPages ? "#" : `/?page=${page + 1}`}
               />
             </PaginationItem>

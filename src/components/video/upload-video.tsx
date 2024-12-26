@@ -64,9 +64,11 @@ const UploadVideo = ({ userId }: { userId: string }) => {
         setOpenModalError(true);
         setErrorMessage(response.message);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       setOpenModalError(true);
-      setErrorMessage(error.message || "Error al subir el video");
+      setErrorMessage(
+        error instanceof Error ? error.message : "Error al subir el video"
+      );
     } finally {
       setIsLoading(false);
       setOpenDialog(false);
