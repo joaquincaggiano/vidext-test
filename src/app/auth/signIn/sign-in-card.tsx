@@ -13,10 +13,6 @@ import Loading from "@/app/loading";
 import ModalError from "@/components/modal/modal-error";
 
 const SignInCard = () => {
-  // const [state, formAction, isPending] = useActionState(handlerSignIn, {
-  //   errors: null,
-  // });
-
   const searchParams = useSearchParams();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +23,7 @@ const SignInCard = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    // reset,
   } = useForm({
     resolver: zodResolver(userSchema),
   });
@@ -49,10 +45,10 @@ const SignInCard = () => {
       signIn("email", {
         email: data.email,
         callbackUrl: searchParams.get("callbackUrl") || "/",
-      });
-    } catch (error: any) {
+      }); 
+    } catch (error: unknown) {
       setOpenModalError(true);
-      setErrorMessage(error.message || "Error al subir el video");
+      setErrorMessage(error instanceof Error ? error.message : "Error desconocido");
     } finally {
       setIsLoading(false);
     }

@@ -1,4 +1,4 @@
-import NextAuth, { DefaultSession, Session } from "next-auth"
+import NextAuth, { Session } from "next-auth"
 import { JWT } from "next-auth/jwt";
 
 interface User {
@@ -6,9 +6,9 @@ interface User {
   email: string
 }
 
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session {
-    user: User & DefaultSession["user"]
+    user?: User
   }
 }
 

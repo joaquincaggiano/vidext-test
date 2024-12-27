@@ -7,8 +7,7 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/db";
 import { htmlTemplate } from "@/utils/email-template";
 import { serverClient } from "@/client/server-client";
-import { JWT } from "next-auth/jwt";
-import { Session } from "next-auth";
+import { User } from "@/db/schema";
 
 export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db) as Adapter,
@@ -63,17 +62,17 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        // const typedUser = user as User;
-        token.id = user.id;
-        token.email = user.email;
+        const typedUser = user as User;
+        token.id = typedUser.id;
+        token.email = typedUser.email;
       }
       return token;
     },
 
-    session({ session, user }) {
+    session({ session, token }) {
       if (session.user) {
-        session.user.id = user.id;
-        session.user.email = user.email;
+        session.user.id = token.id as string;
+        session.user.email = token.email as string;
       }
       return session;
     },
@@ -83,7 +82,7 @@ export const authOptions: NextAuthOptions = {
 
       const userDb = await serverClient.user.getUserByEmail.query(user.email);
 
-      if (!userDb) {
+      if (userDb.length === 0) {
         serverClient.user.createUser.mutate({
           email: user.email,
         });

@@ -1,24 +1,26 @@
 import { initTRPC, TRPCError } from "@trpc/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
-const t = initTRPC.create();
+import { Session } from "next-auth";
+
+type Context = {
+  session: Session | null;
+}
+
+const t = initTRPC.context<Context>().create();
 
 const authMiddleware = t.middleware(async ({ ctx, next }) => {
-  const session = await getServerSession(authOptions);
-  console.log("SESSIOOOOOON:", session);
 
-  if (!session) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+  console.log("ctx authMiddleware: ", ctx);
+
+  if (!ctx.session) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "No tienes acceso a esta operación"
+    });
   }
 
-  return next({
-    ctx: {
-      ...ctx,
-      session,
-    },
-  });
+  return next({ ctx });
 });
+
 export const router = t.router;
 export const publicProcedure = t.procedure;
-
 export const protectedProcedure = t.procedure.use(authMiddleware);

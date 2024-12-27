@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Provider from "../providers/Provider";
 
 interface Props {
   children: ReactNode;
@@ -21,7 +20,6 @@ const AuthLayout = ({ children }: Props) => {
   const path = usePathname();
 
   return (
-    <Provider>
       <div className="flex flex-col min-h-screen">
         <header className="bg-white border-b border-[#ECECEC] flex justify-between items-center py-5 px-8 sm:px-12">
           <Link href="/">
@@ -86,7 +84,6 @@ const AuthLayout = ({ children }: Props) => {
           </div>
         </footer>
       </div>
-    </Provider>
   );
 };
 

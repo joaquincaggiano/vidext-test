@@ -41,14 +41,10 @@ export const videoRouter = router({
     .mutation(async (opts) => {
       const { input } = opts;
 
-      try {
-        const video = await db
-          .insert(videos)
-          .values({ ...input, views: 0, likes: 0 });
-        return video;
-      } catch (error) {
-        console.log("error uploading video", error);
-      }
+      const video = await db
+        .insert(videos)
+        .values({ ...input, views: 0, likes: 0 });
+      return video;
     }),
   updateVideo: publicProcedure
     .input(

@@ -1,6 +1,6 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import UploadVideo from "@/components/video/upload-video";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import { redirect } from "next/navigation";
 
 const UploadVideoPage = async () => {
