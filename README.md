@@ -56,7 +56,10 @@ yarn install
 
 ### Crea la base de datos
 
-ejecuta npx drizzle-kit push o npx drizzle-kit generate y npx drizzle-kit migrate
+npx drizzle-kit push
+o
+npx drizzle-kit generate
+npx drizzle-kit migrate
 
 #### Configura las variables de entorno:
 
