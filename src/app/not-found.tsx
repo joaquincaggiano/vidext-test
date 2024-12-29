@@ -1,6 +1,5 @@
 "use client";
 
-import VidextSvg from "@/components/svgs/vidext-svg";
 import { useRouter } from "next/navigation";
 
 const NotFound = () => {
