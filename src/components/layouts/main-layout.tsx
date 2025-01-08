@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import VidextSvg from "@/components/svgs/vidext-svg";
+import VidextSvg from "@/components/icons/vidext-svg";
 import {
   NavigationMenu,
   NavigationMenuItem,
